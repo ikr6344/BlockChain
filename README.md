@@ -23,6 +23,20 @@
   <img src="/client/public/Supply-Chain-Example.jpeg" />
 </div>
 
+<p align="justify">This image illustrate the key components and flow of a typical supply chain. It depicts the interconnected network of entities involved in the process of transforming raw materials into finished products and delivering them to the end consumer.</p>
+
+<p align="justify">At the center is the "Raw Materials" component, which serves as the starting point for the supply chain. Surrounding it are the various participants:</p>
+
+<ol type="1">
+  <li><b>Supplier:</b> Responsible for providing the raw materials needed for production</li>
+  <li><b>Manufacturer:</b> Uses the raw materials to produce the final product.</li>
+  <li><b>Distributer</b>: Facilitates the logistics and movement of goods from the manufacturer to retailers.</li>
+  <li><b>Retailer:</b> The point of sale where consumers can purchase the products.</li>
+  <li><b>Consumer:</b> The end-user who drives the demand for the product.</li>
+</ol>
+
+<p align="justify">The image shows the directional flow of materials, products, and logistics, connecting each participant in the supply chain. It highlights the interdependencies and coordination required among all the entities to ensure the efficient transformation of raw materials into finished goods and their delivery to the end consumer.</p>
+
 ### Problem Statement
 
 <p align="justify">Supply chains in today's global business environment face challenges such as lack of transparency, traceability, fraud, delays, and fragmented traditional systems resulting in errors. Counterfeiting is a significant concern, especially in global supply chains, posing brand reputation and safety risks. Delayed payments to smaller suppliers create cash flow problems and disrupt efficiency. Opaqueness of financial transactions leads to miscommunications and conflicts, hindering cooperation and trust within the supply chain, impacting communication, cooperation, and innovation.</p>
