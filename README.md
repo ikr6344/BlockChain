@@ -7,6 +7,7 @@
 - Introduction
   - What is a Blockchain?
   - What is a Supply Chain?
+  - Problem Statement
 
 ## Introduction
 
@@ -21,3 +22,7 @@
 <div align="center">
   <img src="/client/public/Supply-Chain-Example.jpeg" />
 </div>
+
+### Problem Statement
+
+<p align="justify">Supply chains in today's global business environment face challenges such as lack of transparency, traceability, fraud, delays, and fragmented traditional systems resulting in errors. Counterfeiting is a significant concern, especially in global supply chains, posing brand reputation and safety risks. Delayed payments to smaller suppliers create cash flow problems and disrupt efficiency. Opaqueness of financial transactions leads to miscommunications and conflicts, hindering cooperation and trust within the supply chain, impacting communication, cooperation, and innovation.</p>
