@@ -17,3 +17,7 @@
 ### What is a Supply Chain?
 
 <p align="justify">The network of all the people, companies, assets, processes, and technological advancements involved in developing and providing a good or service from suppliers to consumers is known as a supply chain. It includes every step of the process, from locating raw materials to shipping the finished good to the customer. While minimizing costs, efficient supply chain management guarantees that the appropriate product is delivered at the right time, in the right amount, and in the desired quality. Businesses must manage this intricate worldwide network of distributors, manufacturers, suppliers, and shipping companies in order to satisfy consumer needs and stay competitive.</p>
+
+<div align="center">
+  <img src="/client/public/Supply-Chain-Example.jpeg" />
+</div>
