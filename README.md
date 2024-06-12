@@ -22,7 +22,7 @@
 <div align="center">
   <img src="/client/public/Supply-Chain-Example.jpeg" />
 </div>
-
+<br>
 <p align="justify">This image illustrate the key components and flow of a typical supply chain. It depicts the interconnected network of entities involved in the process of transforming raw materials into finished products and delivering them to the end consumer.</p>
 
 <p align="justify">At the center is the "Raw Materials" component, which serves as the starting point for the supply chain. Surrounding it are the various participants:</p>
