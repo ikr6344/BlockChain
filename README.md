@@ -8,6 +8,7 @@
   - What is a Blockchain?
   - What is a Supply Chain?
   - Problem Statement
+  - Objectives
 
 ## Introduction
 
@@ -40,3 +41,15 @@
 ### Problem Statement
 
 <p align="justify">Supply chains in today's global business environment face challenges such as lack of transparency, traceability, fraud, delays, and fragmented traditional systems resulting in errors. Counterfeiting is a significant concern, especially in global supply chains, posing brand reputation and safety risks. Delayed payments to smaller suppliers create cash flow problems and disrupt efficiency. Opaqueness of financial transactions leads to miscommunications and conflicts, hindering cooperation and trust within the supply chain, impacting communication, cooperation, and innovation.</p>
+
+### Objectives
+
+<div align="justify">
+  <ol type="a" align="justify">
+    <li>To develop a robust blockchain-based supply chain ledger on the Ethereum platform using Solidity smart contracts.</li>
+    <li>To utilize Reacr JS to build an intuitive interface that offers transparency and real-time tracking across the supply chain.</li>
+    <li>To develop smart contracts in Solidity that automate payment processes based on predefined conditions, reducing the risk of delayed payments and improving cash flow for suppliers.</li>
+    <li>To utilize Node.js for backend development to streamline and optimize the data processing and communication between the blockchain and frontend.</li>
+    <li>Create seamless integration capabilities with existing supply chain systems to ensure a smooth transition and minimal disruption for businesses already using conventional supply chain management methods.</li>
+  </ol>
+</div>
