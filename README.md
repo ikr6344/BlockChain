@@ -10,7 +10,7 @@
   - Problem Statement
   - Objectives
 - Architecture Diagram
-- Working of Contract
+- Working of Smart Contract
 
 ## Introduction
 
@@ -83,7 +83,7 @@
   MetaMask Wallet Integration facilitates transactions within the Ethereum blockchain environment, allowing users to interact with the blockchain, including sending and receiving transactions and interacting with smart contracts. Truffle Environment simplifies the development process of Ethereum-based applications by providing built-in smart contracts with the Solidity programming language, compilation, linking, deployment, and binary management.
 </p>
 
-## Working of the Contract
+## Working of the Smart Contract
 
 <div align="center">
   <img src="/client/public/contractD.png" />
