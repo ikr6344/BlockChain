@@ -12,6 +12,7 @@
 - Architecture Diagram
 - Working of Smart Contract
 - Class Diagram
+- Workflow of Smart Contract
 
 ## Introduction
 
@@ -159,3 +160,5 @@
     <li>Common Attributes: Many classes share attributes like _address, memory_name, and memory_place.</li>
   </ol>
 </div>
+
+## Workflow of Smart Contract
