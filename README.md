@@ -11,6 +11,7 @@
   - Objectives
 - Architecture Diagram
 - Working of Smart Contract
+- Class Diagram
 
 ## Introduction
 
@@ -97,3 +98,64 @@
 <p align="justify">
   The right side of the diagram depicts the traditional supply chain flow, starting from the Raw Material Supplier, then to the Manufacture, followed by the Distributor, and finally to the Retailer, who seels the product to the Customer. All transactions that occur throughout the supply chain process are recorded on a shared ledger, which is visible to any node (participant) in the blockchain network. This ledger provides transparency and traceability for every transaction that takes place within the supply chain.
 </p>
+
+## Class Diagram
+
+<div align="center">
+  <img src="/client/public/Project.jpg" />
+</div>
+<br />
+
+<p align="justify">This class diagram represents the Blockchain Based Supply Chain Management System for goods.</p>
+
+<div align="justify">
+  <ol type="1" align="justify">
+    <li>Central Classes:
+      <ul>
+        <li>SupplyChain: The core class connecting various entities.</li>
+        <li>Goods: Represents the product with properties like id, name, description, and IDs for different stages.</li>
+      </ul>
+    </li>
+    <li>Participants:
+      <ul>
+        <li>addManufacturer: Represents manufacturers.</li>
+        <li>addRMS: Represents Raw Material Suppliers.</li>
+        <li>addDistributor: Represents distributors.</li>
+        <li>addRetailer: Represents retailers.</li>
+      </ul>
+    </li>
+    <li>Processes:
+      <ul>
+        <li>Manufacturing: Linked to manufacturers.</li>
+        <li>RMSsupply: Linked to Raw Material Suppliers.</li>
+        <li>Distribute: Linked to distributors.</li>
+        <li>Retail: Linked to retailers.</li>
+      </ul>
+    </li>
+    <li>Stages: An enumeration (Enum Stage) shows the product lifecycle:
+      <ul>
+        <li>Init</li>
+        <li>Manufacture</li>
+        <li>Distribution</li>
+        <li>Retail</li>
+        <li>Sold</li>
+      </ul>
+    </li>
+    <li>Functions:
+      <ul>
+        <li>addGoods: For adding new products.</li>
+        <li>findDIS, findRMS, findMan, findRET: For finding distributors, raw material suppliers, manufacturers, and retailers respectively.</li>
+        <li>onlyByOwner: Access control function.</li>
+        <li>showStage: Shows the current stage of a product.</li>
+      </ul>
+    </li>
+    <li>Relationships:
+      <ul>
+        <li>The SupplyChain class is central, connecting to manufacturers, RMS, distributors, and retailers.</li>
+        <li>Each participant type(Manufacturer, RMS, distributor, retailer) has a 1 to many relationship with SupplyChain.</li>
+        <li>The goods class is connected to SupplyChain and the Stage enumeration.</li>
+      </ul>
+    </li>
+    <li>Common Attributes: Many classes share attributes like _address, memory_name, and memory_place.</li>
+  </ol>
+</div>
