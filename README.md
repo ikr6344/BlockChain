@@ -162,3 +162,7 @@
 </div>
 
 ## Workflow of Smart Contract
+
+<div align="center">
+  <img src="/client/public/Supply Chain Workflow.png" />
+</div>
