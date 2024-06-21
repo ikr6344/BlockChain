@@ -166,3 +166,8 @@
 <div align="center">
   <img src="/client/public/Supply Chain Workflow.png" />
 </div>
+<br />
+
+<p align="justify">
+  This workflow diagram illustrates the process of creating and managing a supply chain using blockchain and smart contracts. Here's a breakdown of the workflow:
+</p>
