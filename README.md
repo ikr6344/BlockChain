@@ -171,3 +171,51 @@
 <p align="justify">
   This workflow diagram illustrates the process of creating and managing a supply chain using blockchain and smart contracts. Here's a breakdown of the workflow:
 </p>
+
+<div align="justify">
+  <ol type="1" align="justify">
+    <li>Starting point: The process begins with the Owner.</li>
+    <li>Smart Contract Creation:
+      <ol>
+        <li>The Owner creates a smart contract.</li>
+        <li>This contract is then deployed to the Blockchain.</li>
+      </ol>
+    </li>
+    <li>Supply Chain Members:
+      <ol>
+        <li>The diagram lists Raw Material Suppliers, Manufacturers, Distributors, and Retailers as potential Supply Chain Members.</li>
+        <li>These members go through a registration process.</li>
+      </ol>
+    </li>
+    <li>Verification Process:
+      <ol>
+        <li>After registration, there's a verification step labeled "Owner Verify Supply Chain Memeber."</li>
+        <li>This is a decision point:
+          <ol>
+            <li>If verified (Yes), the member is added to the chain.</li>
+            <li>If not verified (No), the member is rejected.</li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li>Blockchain Integration:
+      <ol>
+        <li>Verified members are added to the blockchain.</li>
+      </ol>
+    </li>
+    <li>Stages: The diagram outlines the stages of the supply chain:
+      <ol>
+        <li>Initial</li>
+        <li>Raw Material</li>
+        <li>Manufacture</li>
+        <li>Distributor</li>
+        <li>Retailer</li>
+        <li>Sold</li>
+      </ol>
+    </li>
+  </ol>
+</div>
+
+<p align="justify">
+  This workflow demonstrates a controlled, secure process for managing a supply chain using blockchain technology. It ensures that only verified members can participate, and it tracks the product through various stages from raw materials to final sale.
+</p>
