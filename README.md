@@ -220,3 +220,5 @@
 <p align="justify">
   This workflow demonstrates a controlled, secure process for managing a supply chain using blockchain technology. It ensures that only verified members can participate, and it tracks the product through various stages from raw materials to final sale.
 </p>
+
+## Technology Stack Used
