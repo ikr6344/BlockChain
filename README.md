@@ -13,6 +13,7 @@
 - Working of Smart Contract
 - Class Diagram
 - Workflow of Smart Contract
+- Technology Stack Used
 
 ## Introduction
 
