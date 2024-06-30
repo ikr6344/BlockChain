@@ -17,6 +17,7 @@
 - Setting up Local Development
   - Step 1. Installation and Setup
   - Step 2. Create, Compile & Deploy Smart Contract
+  - Step 3. Run DAPP
 
 ## Introduction
 
@@ -290,3 +291,24 @@ truffle compile
   truffle migrate
   ```
   - This command will deploy smart contract to Blockchain.
+
+### Step 3. Run DAPP
+
+- Open a second terminal and change the working directory to client folder:
+```bash
+cd client
+```
+- Install all packages in the `package.json` file:
+```bash
+npm i
+```
+- Install Web3 in the `package.json` file:
+```bash
+npm install -save web3
+```
+- Run the app:
+```bash
+npm start
+```
+- The app gets hosted by default at port 3000.
+```
