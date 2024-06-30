@@ -311,4 +311,3 @@ npm install -save web3
 npm start
 ```
 - The app gets hosted by default at port 3000.
-```
