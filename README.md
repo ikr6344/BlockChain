@@ -222,3 +222,10 @@
 </p>
 
 ## Technology Stack Used
+
+- *Blockchain Platform:* Ethereum Chain
+- *Smart Contract Development:* Solidity
+- *Frontend Development:* ReactJS
+- *Backend Development:* Node.js
+- *Wallet:* MetaMask
+- *Chain Development Platform:* Truffle
