@@ -232,3 +232,19 @@
 - *Backend Development:* Node.js
 - *Wallet:* MetaMask
 - *Chain Development Platform:* Truffle
+
+## Setting up Local Debelopment
+
+### Step 1. Installation and Setup
+
+- **IDE:** You can use any Integrated Development Environment. (I used Visual Studio Code. You can download )
+- **Node.js:** Download the latest version of Node.js from https://nodejs.org/ and after installation check version using terminal:
+```bash
+node -v
+```
+- **Git:** Download the latest version of Git from the official website at https://git-scm.com/downloads and check version using terminal:
+```bash
+git --version
+```
+- **Ganache:** Download the latest version of Ganache from the official website at https://www.trufflesuite.com/ganache
+- **MetaMask:** Can be installed as a browser extension from the Chrome Web Store or Firefox Add-ons store.
