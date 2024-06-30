@@ -14,6 +14,9 @@
 - Class Diagram
 - Workflow of Smart Contract
 - Technology Stack Used
+- Setting up Local Development
+  - Step 1. Installation and Setup
+  - Step 2. Create, Compile & Deploy Smart Contract
 
 ## Introduction
 
