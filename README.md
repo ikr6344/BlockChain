@@ -248,3 +248,45 @@ git --version
 ```
 - **Ganache:** Download the latest version of Ganache from the official website at https://www.trufflesuite.com/ganache
 - **MetaMask:** Can be installed as a browser extension from the Chrome Web Store or Firefox Add-ons store.
+
+### Step 2. Create, Compile & Deploy Smart Contract
+
+- **Clone Project:** Type the following command in the terminal and execute the command:
+```bash
+git clone https://github.com/aniru-dh21/Blockchain-Based-Supply-Chain.git
+```
+- Change the working directory to the cloned project and open your choice of IDE in the working directory(I am using VSCode).
+```bash
+cd Blockchain-Based-Supply-Chain
+code .
+```
+- **Install Truffle:** Type the following command and execute the command:
+```bash
+npm install -g truffle
+```
+- **Install Dependencies:** Type the following command and execute the command:
+```bash
+npm i
+```
+- **File Structure for DApp:**
+  - *contracts:* This folder contains the Solidity smart contracts for the DApp. The Migrations.sol contract is automatically created by Truffle and is used for managing migrations.
+  - *migrations:* This folfer contains the JavaScript migration files used to deploy the smart contracts to the blockchain network.
+  - *test:* This folder contains the JavaScript test files used to test the smart contracts.
+  - *truffle-config.js:* This file contains the configuration for the Truffle project, including the blockchain network to be used and any necessary settings.
+  - *package.json:* This file in generated automatically and contains the exact version of each dependency used in the project.
+  - *package-lock.json:* This file is generated automatically and contains the exacy version of each dependency used in the project.
+  - *Clients:* This folder contains the client-side code, typically HTML, CSS, and JavaScript, can be organized into a client folder.
+- **Compile the smart contract:** In the terminal, use the following command to compile the smart contract:
+```bash
+truffle compile
+```
+- **Deploy the smart contract:**
+  - After compile, we need to deploy your smart contract on Blockchain. In our case, we are using Ganache which is personal blockchain for Ethereum development, used to test and develop Smart Contracts.
+  - Open Ganache and create new WorkSpace. Copy RPC Server Address.
+  - The RPC Server is used to allow applications to communicate with the Ethereum blockchain and execute smart contract transactions, query the state of the blockchain, and interact with the Ethereum network.
+  - Now to add RPC address in our truffle-config.js and the replace host address and port address with our ganache rcp.
+  - After changing RPC address. Open terminal and run this command:
+  ```bash
+  truffle migrate
+  ```
+  - This command will deploy smart contract to Blockchain.
