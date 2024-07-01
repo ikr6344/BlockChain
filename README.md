@@ -18,6 +18,7 @@
   - Step 1. Installation and Setup
   - Step 2. Create, Compile & Deploy Smart Contract
   - Step 3. Run DAPP
+  - Step 4. Connect Meta Mask with Ganache
 
 ## Introduction
 
@@ -311,3 +312,9 @@ npm install -save web3
 npm start
 ```
 - The app gets hosted by default at port 3000.
+
+### Step 4. Connect Meta Mask with Ganache
+
+<div align="center">
+  <img src="/client/public/Ganache Connector.jpg" />
+</div>
