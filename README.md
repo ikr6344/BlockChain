@@ -318,3 +318,9 @@ npm start
 <div align="center">
   <img src="/client/public/Ganache Connector.jpg" />
 </div>
+
+- *Start Ganache:* Start the Ganache application and make note of the RPC server URL and port number.
+- *Connect MetaMask:* Open MetaMask in your browser and click on the network dropdown in the top-right corner. Select `Custom RPC` and enter the RPC server URL and port number for your Ganache instance. Click `Save`.
+- *Import an account:* In Ganache, click on the `Accounts` tab and select the first account listed. Click on the `Copy` button next to the `Private Key` field.
+- In MetaMask, click on three dots in the top-right corner, select `Import Account`, and paste the private key into the private key field. Click `Import`.
+- Add All participate (Raw Materials, Supplier, Manufacture, Retail) by following above steps.
