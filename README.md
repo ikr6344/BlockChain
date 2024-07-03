@@ -225,6 +225,30 @@ Key components of the diagram:
   <img src="/client/public/Sequence diagram.jpeg" />
 </div>
 
+<p align="justify">
+  This sequence diagram illustrates the flow of interactions in a blockchain-based supply chain management system. It shows how different actors and components communicate over time to manage the supply chain process. Here's a breakdown of the sequence:
+</p>
+
+<div align="justify">
+  <ol type="1">
+    <li>The Owner initiates the process by registering stakeholders with the <code>Registering Stakeholders</code> component.</li>
+    <li>The Owner then orders goods through the <code>Ordering Goods</code> component.</li>
+    <li>The <code>Ordering Goods</code> component checks if all stakeholders are registered.</li>
+    <li>It then generates a unique ID for the ordered goods.</li>
+    <li>The system displays the ordered goods to the Owner.</li>
+    <li>The Raw Material Supplier updates the status of goods in the <code>Control Supply Chain</code> component.</li>
+    <li>The Raw Material Supplier tracks goods using the <code>Goods Tracker</code> component.</li>
+    <li>The Manufacturer updates the status of goods.</li>
+    <li>The Manufacturer tracks goods.</li>
+    <li>The Distributor updates the status of goods.</li>
+    <li>The Distributor tracks goods.</li>
+    <li>The Retailer updates the status of goods.</li>
+    <li>The Retailer records the selling of goods in the <code>Control Supply Chain</code> component.</li>
+    <li>The Retailer completes the selling of goods.</li>
+    <li>Finally, the Owner can track goods throughout the entire process.</li>
+  </ol>
+</div>
+
 ## Workflow of Smart Contract
 
 <div align="center">
