@@ -13,6 +13,7 @@
 - Working of Smart Contract
 - Class Diagram
 - Use Case Diagram
+- Sequence Diagram
 - Workflow of Smart Contract
 - Technology Stack Used
 - Setting up Local Development
@@ -199,11 +200,30 @@ Key components of the diagram:
   The diagram demonstrates how these actors interact with different processes in the supply chain:
 </p>
 
-1. The *Owner* is connected to all uses cases, which suggesting overall management and oversight of the entire process.
-2. The *Raw Material Supplier* is linked to `Supplying Raw Material` and `Tracking of Goods`.
-3. The Manufacturer is connected to `Manufacturing of Goods` and `Tracking of Goods`.
-4. The Distributor is linked to `Distribution of Goods` and `Tracking of Goods`.
-5. The Retailer is connected to `Selling of Goods` and `Tracking of Goods.`
+<div align="justify">
+  <ol type="1">
+    <li>The <i>Owner</i> is connected to all uses cases, which suggesting overall management and oversight of the entire process.
+    </li>
+    <li>
+      The <i>Raw Material Supplier</i> is linked to <code>Supplying Raw Material</code> and <code>Tracking of Goods</code>.
+    </li>
+    <li>
+      The <i>Manufacturer</i> is connected to <code>Manufacturing of Goods</code> and <code>Tracking of Goods</code>.
+    </li>
+    <li>
+      The <i>Distributor</i> is linked to <code>Distribution of Goods</code> and <code>Tracking of Goods</code>.
+    </li>
+    <li>
+      The <i>Retailer</i> is connected to <code>Selling of Goods</code> and <code>Tracking of Goods</code>.
+    </li>
+  </ol>
+</div>
+
+## Sequence Diagram
+
+<div align="center">
+  <img src="/client/public/Sequence diagram.jpeg" />
+</div>
 
 ## Workflow of Smart Contract
 
