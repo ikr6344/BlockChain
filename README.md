@@ -12,6 +12,7 @@
 - Architecture Diagram
 - Working of Smart Contract
 - Class Diagram
+- Use Case Diagram
 - Workflow of Smart Contract
 - Technology Stack Used
 - Setting up Local Development
@@ -166,6 +167,43 @@
     <li>Common Attributes: Many classes share attributes like _address, memory_name, and memory_place.</li>
   </ol>
 </div>
+
+## Use Case Diagram
+
+<div align="center">
+  <img src="/client/public/Use case diagram.jpeg" />
+</div>
+<br />
+
+<p align="justify">
+  This use case diagram illustrates the various processes and stakeholders involved in a blockchain-based supply chain management system. The diagram shows how different actors interact with the system through various use cases, representing the key functions in the supply chain.
+</p>
+
+Key components of the diagram:
+1. *Actors (represented by stick figures):*
+   - Owner
+   - Raw Material Supplier
+   - Manufacturer
+   - Distributor
+   - Retailer
+2. *Use Cases(represented by ovals):*
+   - Registering Stakeholders
+   - Ordering Goods
+   - Supply Raw Material
+   - Manufacturing Goods
+   - Distribution of Goods
+   - Selling of Goods
+   - Tracking of Goods
+
+<p align="justify">
+  The diagram demonstrates how these actors interact with different processes in the supply chain:
+</p>
+
+1. The *Owner* is connected to all uses cases, which suggesting overall management and oversight of the entire process.
+2. The *Raw Material Supplier* is linked to `Supplying Raw Material` and `Tracking of Goods`.
+3. The Manufacturer is connected to `Manufacturing of Goods` and `Tracking of Goods`.
+4. The Distributor is linked to `Distribution of Goods` and `Tracking of Goods`.
+5. The Retailer is connected to `Selling of Goods` and `Tracking of Goods.`
 
 ## Workflow of Smart Contract
 
