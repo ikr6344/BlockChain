@@ -21,6 +21,8 @@
   - Step 2. Create, Compile & Deploy Smart Contract
   - Step 3. Run DAPP
   - Step 4. Connect Meta Mask with Ganache
+- Additional Information
+  - Ethereum Chain
 
 ## Introduction
 
@@ -59,7 +61,7 @@
 <div align="justify">
   <ol type="a" align="justify">
     <li>To develop a robust blockchain-based supply chain ledger on the Ethereum platform using Solidity smart contracts.</li>
-    <li>To utilize Reacr JS to build an intuitive interface that offers transparency and real-time tracking across the supply chain.</li>
+    <li>To utilize React JS to build an intuitive interface that offers transparency and real-time tracking across the supply chain.</li>
     <li>To develop smart contracts in Solidity that automate payment processes based on predefined conditions, reducing the risk of delayed payments and improving cash flow for suppliers.</li>
     <li>To utilize Node.js for backend development to streamline and optimize the data processing and communication between the blockchain and frontend.</li>
     <li>Create seamless integration capabilities with existing supply chain systems to ensure a smooth transition and minimal disruption for businesses already using conventional supply chain management methods.</li>
@@ -406,3 +408,15 @@ npm start
 - *Import an account:* In Ganache, click on the `Accounts` tab and select the first account listed. Click on the `Copy` button next to the `Private Key` field.
 - In MetaMask, click on three dots in the top-right corner, select `Import Account`, and paste the private key into the private key field. Click `Import`.
 - Add All participate (Raw Materials, Supplier, Manufacture, Retail) by following above steps.
+
+## Additional Information
+
+### Ethereum Chain
+
+<p align="justify">
+  The Ethereum Chain, sometimes known as Ethereum, is an open-source decentralized blockchain platform that facilitates the development of decentralized applications (DApps) for smart contracts. Vitalik Buterin came up with the idea in 2013 and it was formally introduced in 2015. Ethereum is fundamentally a distributed ledger system running on an international node network. Unlike traditional centralized systems, Ethereum relies on a vast network of computers, known as nodes, to confirm and record transactions, guaranteeing security and openness.
+</p>
+
+<p align="justify">
+  Ethereum is unique in that it supports Self-executing contracts with preset terms and conditions are known as smart contracts. Solidity is an Ethereum-specific programming language used to write these contracts. Smart Contracts enable automation and trust in various applications, from financial services to supply chain management. Ethereum uses a cryptocurrency called Ether (ETH) to facilitate transactions and incentivize network participants, such as miners and developers. Ether can also be used to pay for computational services within the Ethereum network.
+</p>
