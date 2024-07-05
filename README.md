@@ -23,6 +23,7 @@
   - Step 4. Connect Meta Mask with Ganache
 - Additional Information
   - Ethereum Chain
+  - Solidity
 
 ## Introduction
 
@@ -419,4 +420,14 @@ npm start
 
 <p align="justify">
   Ethereum is unique in that it supports Self-executing contracts with preset terms and conditions are known as smart contracts. Solidity is an Ethereum-specific programming language used to write these contracts. Smart Contracts enable automation and trust in various applications, from financial services to supply chain management. Ethereum uses a cryptocurrency called Ether (ETH) to facilitate transactions and incentivize network participants, such as miners and developers. Ether can also be used to pay for computational services within the Ethereum network.
+</p>
+
+### Solidity
+
+<p align="justify">
+  Solidity is a high-level, statically typed programming language designed specifically for writing smart contracts on Ethereum and other blockchain platforms. Smart contracts are contracts that execute themselves and automate and enforce blockchain transactions based on predefined criteria and conditions. Solidity serves as primary language for developing these smart contracts, and it's crucial components of the Ethereum ecosystem. Solidity's design is influenced by JavaScript and Python, making it accessible to developers familiar with these languages. It provides tools and structure for defining the logic of smart contracts, including functions, data types and control structures.
+</p>
+
+<p align="justify">
+  One of Solidity's core functions is its ability to handle complex financial and business logic within smart contracts. Developers can create custom tokens, manage digital assets, and establish intricate governance systems all executed autonomously on the Ethereum blockchain. Solidity promotes security through built-in features like access control, overflow protection, and automated checked to prevent common vulnerabilities such as reentrancy protection, and automated checked to prevent common vulnerabilities such as reentrancy attacks. However, it also requires a deep understanding of blockchain concepts to write secure and efficient contracts. In conclusion, Solidity is a specialized programming language empowering developers to craft smart contracts for Ethereum and other compatible blockchain platforms.
 </p>
