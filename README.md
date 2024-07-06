@@ -26,6 +26,7 @@
   - Solidity
   - Truffle Environment
   - React.js
+  - MetaMask Wallet
 
 ## Introduction
 
@@ -456,4 +457,10 @@ npm start
 
 <p align="justify">
   These components can be nested and combined, forming the building blocks of complex web applications. This modularity promotes code organization, reusability, and independent development, making it easier for teams to collaborate and build large-scale applications efficiently. Another key features of React is its virtual DOM (Document Object Model). This in-memory representation of the actual DOM allows React to efficiently calculate the minimal changes needed to update the UI whenever data changes. This optimization translates to faster rendering and a smoother user experience, especially in applications with frequent updates.
+</p>
+
+### MetaMask Wallet
+
+<p align="justify">
+  MetaMask is a widely-used cryptocurrency wallet and a browser extension that enables users to interact with decentralized applications (DApps) built on Ethereum blockchain. In the context of this project, MetaMask serves as a secure gateway for supply chain stakeholders to authenticate themselves and participate in the blockchain-based supply chain management system. By leveraging MetaMask, stakeholders can securely sign transactions and execute smart contract functions related to various supply chain operations, such as tracking product movements, verifying authenticity, and recording custody transfers. The integration with MetaMask ensures that these transactions are cryptographically signed and validated, maintaining integrity and immutability of supply chain data recorded on Ethereum blockchain. Furthermore, MetaMask enables stakeholders to manage their Ethereum-based cryptocurrency holdings, which can be used to pay transaction fees or facilitate secure value transfers within the supply chain ecosystem, if required.
 </p>
