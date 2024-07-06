@@ -27,6 +27,7 @@
   - Truffle Environment
   - React.js
   - MetaMask Wallet
+  - Node.js
 
 ## Introduction
 
@@ -463,4 +464,14 @@ npm start
 
 <p align="justify">
   MetaMask is a widely-used cryptocurrency wallet and a browser extension that enables users to interact with decentralized applications (DApps) built on Ethereum blockchain. In the context of this project, MetaMask serves as a secure gateway for supply chain stakeholders to authenticate themselves and participate in the blockchain-based supply chain management system. By leveraging MetaMask, stakeholders can securely sign transactions and execute smart contract functions related to various supply chain operations, such as tracking product movements, verifying authenticity, and recording custody transfers. The integration with MetaMask ensures that these transactions are cryptographically signed and validated, maintaining integrity and immutability of supply chain data recorded on Ethereum blockchain. Furthermore, MetaMask enables stakeholders to manage their Ethereum-based cryptocurrency holdings, which can be used to pay transaction fees or facilitate secure value transfers within the supply chain ecosystem, if required.
+</p>
+
+### Node.js
+
+<p align="justify">
+  Node.js is a JavaScript runtime environment that allows developers to execute JavaScript code on the server-side. In the context of this project, Node.js is used to build the backend server, which acts as an intermediary between the frontend user interface and the Ethereum blockchain. One of the primary responsibilities of the Node.js backend is to facilitate communication between the client-side application (built with React.js) and the Ethereum blockchain network. This communication is achieved through the integration of Web3.js, a JavaScript library that provides a convenient way to interact with Ethereum nodes.
+</p>
+
+<p align="justify">
+  The Node.js backend utilizes Web3.js to establish a connection with the Ethereum blockchain, enabling the execution of various operations such as deploying and interacting with smart contracts, sending transactions, and retrieving data from the blockchain. This functionality is crucial for managing and tracking the supply chain data stored on the Ethereum network. Additionally, the Node.js backend handles user authentication and authorization processes. By leveraging the Ethereum stakeholder addresses as digital identities, the backend can verify and grant access to authenticated stakeholders, ensuring the security and integrity of the supply chain management system.
 </p>
