@@ -488,4 +488,4 @@ npm start
 ## Authors
 
 - Ramachandra Anirudh Vemulapalli - [Github](https://github.com/aniru-dh21) | [Website](https://ramachandra-anirudh-vemulapalli.vercel.app/)
-- Bhargava Rao - [Github]()
+- Bhargava Rao - [Github](https://github.com/BhargavaRaoPallala)
