@@ -29,6 +29,7 @@
   - MetaMask Wallet
   - Node.js
 - Additional Documentation
+- Authors
 
 ## Introduction
 
@@ -483,3 +484,8 @@ npm start
 - React: https://reactjs.org/docs/getting-started.html
 - Truffle: https://www.trufflesuite.com/docs/truffle/reference/configuration
 - Ganache-CLI: https://www.trufflesuite.com/docs/ganache/overview
+
+## Authors
+
+- Ramachandra Anirudh Vemulapalli - [Github](https://github.com/aniru-dh21) | [Website](https://ramachandra-anirudh-vemulapalli.vercel.app/)
+- Bhargava Rao - [Github]()
