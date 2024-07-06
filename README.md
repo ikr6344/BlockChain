@@ -25,6 +25,7 @@
   - Ethereum Chain
   - Solidity
   - Truffle Environment
+  - React.js
 
 ## Introduction
 
@@ -445,4 +446,14 @@ npm start
 
 <p align="justify">
   Beyond these core functionalities, Truffle offered a powerful console for real-time interaction with the blockchain. This empowered developers to test smart contract functions directly, inspect variables, and debug issues in hands-on manner. The user-friendly interface further simplified the process of deploying and managing contract updates through scripted deployments and migrations.
+</p>
+
+### React.js
+
+<p align="justify">
+  React, an open-source JavaScript library developed and maintained by Meta, stands as a dominant force in the realm of front-end development. Its component-based architecture empowers developers to build dynamic and interactive user interfaces (UIs) in a modular and reusable fashion. This approach fosters maintainability, scalability, and a streamlined development experience. At its core, React leverages the concept of “components,” self-contained and reusable pieces of UI that encapsulates both HTML structure and logic.
+</p>
+
+<p align="justify">
+  These components can be nested and combined, forming the building blocks of complex web applications. This modularity promotes code organization, reusability, and independent development, making it easier for teams to collaborate and build large-scale applications efficiently. Another key features of React is its virtual DOM (Document Object Model). This in-memory representation of the actual DOM allows React to efficiently calculate the minimal changes needed to update the UI whenever data changes. This optimization translates to faster rendering and a smoother user experience, especially in applications with frequent updates.
 </p>
