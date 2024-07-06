@@ -24,6 +24,7 @@
 - Additional Information
   - Ethereum Chain
   - Solidity
+  - Truffle Environment
 
 ## Introduction
 
@@ -430,4 +431,18 @@ npm start
 
 <p align="justify">
   One of Solidity's core functions is its ability to handle complex financial and business logic within smart contracts. Developers can create custom tokens, manage digital assets, and establish intricate governance systems all executed autonomously on the Ethereum blockchain. Solidity promotes security through built-in features like access control, overflow protection, and automated checked to prevent common vulnerabilities such as reentrancy protection, and automated checked to prevent common vulnerabilities such as reentrancy attacks. However, it also requires a deep understanding of blockchain concepts to write secure and efficient contracts. In conclusion, Solidity is a specialized programming language empowering developers to craft smart contracts for Ethereum and other compatible blockchain platforms.
+</p>
+
+### Truffle Environment
+
+<p align="justify">
+  Truffle, while currently in its sunset phase, played a pivotal role in shaping the development landscape for blockchain applications, particularly on the Ethereum platform. It provided a comprehensive and user-friendly environment, streamlining the process from initial coding to deployment and testing. This made it a popular choice for developers, fostering innovation and contributing significantly to the growth of blockchain technology.
+</p>
+
+<p align="justify">
+  At its core, Truffle functioned as a dedicated workspace for blockchain projects. Developers could leverage its built-in features to seamlessly handle various tasks. Compiling smart contracts, the core building blocks of blockchain applications, was made effortless. Linking these contracts together and deploying them to diverse blockchain networks, both public and private, was facilitated through intuitive workflows. Additionally, Truffle integrated established testing frameworks like Mocha and Chai, allowing developers to rigorously test their smart contracts and ensure their functionality within the complex blockchain environment.
+</p>
+
+<p align="justify">
+  Beyond these core functionalities, Truffle offered a powerful console for real-time interaction with the blockchain. This empowered developers to test smart contract functions directly, inspect variables, and debug issues in hands-on manner. The user-friendly interface further simplified the process of deploying and managing contract updates through scripted deployments and migrations.
 </p>
