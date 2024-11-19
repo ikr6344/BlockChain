@@ -1,0 +1,81 @@
+/* Supply.css */
+
+/* Container padding and background */
+.container {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Headings */
+  h2 {
+    color: #343a40;
+    font-weight: 700;
+  }
+  
+  h5, h6 {
+    color: #495057;
+    font-weight: 600;
+  }
+  
+  /* Account address styling */
+  .text-muted {
+    font-size: 0.9rem;
+    color: #6c757d;
+  }
+  
+  /* Loading text */
+  .text-primary {
+    color: #007bff !important;
+  }
+  
+  /* Table styling */
+  .table {
+    margin-top: 20px;
+    border: 1px solid #dee2e6;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #e9ecef;
+  }
+  
+  .table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .table thead th {
+    background-color: #343a40;
+    color: #fff;
+  }
+  
+  /* Button styling */
+  .btn {
+    border-radius: 4px;
+  }
+  
+  .btn-outline-danger {
+    margin-left: 10px;
+  }
+  
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  
+  .btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+  
+  /* Form styling */
+  form input {
+    width: 200px;
+    margin-right: 10px;
+  }
+  
+  form button {
+    min-width: 80px;
+  }
+  

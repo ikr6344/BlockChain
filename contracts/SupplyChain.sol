@@ -5,7 +5,6 @@ contract SupplyChain {
     //Smart Contract owner will be the person who deploys the contract only he can authorize various roles like retailer, Manufacturer,etc
     address public Owner;
 
-    //note this constructor will be called when smart contract will be deployed on blockchain
     constructor() public {
         Owner = msg.sender;
     }
@@ -16,13 +15,11 @@ contract SupplyChain {
     // Distributor; //This guy distributes the medicines to retailers
     // Retailer; //Normal customer buys from the retailer
 
-    //modifier to make sure only the owner is using the function
     modifier onlyByOwner() {
         require(msg.sender == Owner);
         _;
     }
 
-    //stages of a medicine in pharma supply chain
     enum STAGE {
         Init,
         RawMaterialSupply,
@@ -31,35 +28,28 @@ contract SupplyChain {
         Retail,
         sold
     }
-    //using this we are going to track every single medicine the owner orders
 
-    //Medicine count
     uint256 public medicineCtr = 0;
-    //Raw material supplier count
     uint256 public rmsCtr = 0;
-    //Manufacturer count
     uint256 public manCtr = 0;
-    //distributor count
     uint256 public disCtr = 0;
-    //retailer count
     uint256 public retCtr = 0;
 
-    //To store information about the medicine
     struct medicine {
-        uint256 id; //unique medicine id
-        string name; //name of the medicine
-        string description; //about medicine
-        uint256 RMSid; //id of the Raw Material supplier for this particular medicine
-        uint256 MANid; //id of the Manufacturer for this particular medicine
-        uint256 DISid; //id of the distributor for this particular medicine
-        uint256 RETid; //id of the retailer for this particular medicine
-        STAGE stage; //current medicine stage
-    }
+    uint256 id;
+    string name;
+    string description;
+    uint256 price; 
+    uint256 RMSid;
+    uint256 MANid;
+    uint256 DISid;
+    uint256 RETid;
+    STAGE stage;
+}
 
-    //To store all the medicines on the blockchain
+
     mapping(uint256 => medicine) public MedicineStock;
 
-    //To show status to client applications
     function showStage(
         uint256 _medicineID
     ) public view returns (string memory) {
@@ -78,91 +68,101 @@ contract SupplyChain {
             return "Goods Sold";
     }
 
-    //To store information about raw material supplier
     struct rawMaterialSupplier {
         address addr;
-        uint256 id; //supplier id
-        string name; //Name of the raw material supplier
-        string place; //Place the raw material supplier is based in
+        uint256 id;
+        string name;
+        string place;
     }
 
-    //To store all the raw material suppliers on the blockchain
     mapping(uint256 => rawMaterialSupplier) public RMS;
 
-    //To store information about manufacturer
     struct manufacturer {
         address addr;
-        uint256 id; //manufacturer id
-        string name; //Name of the manufacturer
-        string place; //Place the manufacturer is based in
+        uint256 id;
+        string name;
+        string place;
     }
 
-    //To store all the manufacturers on the blockchain
     mapping(uint256 => manufacturer) public MAN;
 
-    //To store information about distributor
     struct distributor {
         address addr;
-        uint256 id; //distributor id
-        string name; //Name of the distributor
-        string place; //Place the distributor is based in
+        uint256 id;
+        string name;
+        string place;
     }
 
-    //To store all the distributors on the blockchain
     mapping(uint256 => distributor) public DIS;
 
-    //To store information about retailer
     struct retailer {
         address addr;
-        uint256 id; //retailer id
-        string name; //Name of the retailer
-        string place; //Place the retailer is based in
+        uint256 id;
+        string name;
+        string place;
     }
 
-    //To store all the retailers on the blockchain
     mapping(uint256 => retailer) public RET;
 
-    //To add raw material suppliers. Only contract owner can add a new raw material supplier
-    function addRMS(
-        address _address,
-        string memory _name,
-        string memory _place
-    ) public onlyByOwner {
+    // Add Raw Material Supplier
+    function addRMS(address _address, string memory _name, string memory _place) public {
+        require(!isRMSRegistered(_address), "RMS already registered");
         rmsCtr++;
         RMS[rmsCtr] = rawMaterialSupplier(_address, rmsCtr, _name, _place);
     }
 
-    //To add manufacturer. Only contract owner can add a new manufacturer
-    function addManufacturer(
-        address _address,
-        string memory _name,
-        string memory _place
-    ) public onlyByOwner {
+    // Add Manufacturer
+    function addManufacturer(address _address, string memory _name, string memory _place) public {
+        require(!isMANRegistered(_address), "Manufacturer already registered");
         manCtr++;
         MAN[manCtr] = manufacturer(_address, manCtr, _name, _place);
     }
 
-    //To add distributor. Only contract owner can add a new distributor
-    function addDistributor(
-        address _address,
-        string memory _name,
-        string memory _place
-    ) public onlyByOwner {
+    // Add Distributor
+    function addDistributor(address _address, string memory _name, string memory _place) public {
+        require(!isDISRegistered(_address), "Distributor already registered");
         disCtr++;
         DIS[disCtr] = distributor(_address, disCtr, _name, _place);
     }
 
-    //To add retailer. Only contract owner can add a new retailer
-    function addRetailer(
-        address _address,
-        string memory _name,
-        string memory _place
-    ) public onlyByOwner {
+    // Add Retailer
+    function addRetailer(address _address, string memory _name, string memory _place) public {
+        require(!isRETRegistered(_address), "Retailer already registered");
         retCtr++;
         RET[retCtr] = retailer(_address, retCtr, _name, _place);
     }
 
-    //To supply raw materials from RMS supplier to the manufacturer
+    // Private helper functions to check if an address is already registered for a role
+
+    function isRMSRegistered(address _address) private view returns (bool) {
+        for (uint256 i = 1; i <= rmsCtr; i++) {
+            if (RMS[i].addr == _address) return true;
+        }
+        return false;
+    }
+
+    function isMANRegistered(address _address) private view returns (bool) {
+        for (uint256 i = 1; i <= manCtr; i++) {
+            if (MAN[i].addr == _address) return true;
+        }
+        return false;
+    }
+
+    function isDISRegistered(address _address) private view returns (bool) {
+        for (uint256 i = 1; i <= disCtr; i++) {
+            if (DIS[i].addr == _address) return true;
+        }
+        return false;
+    }
+
+    function isRETRegistered(address _address) private view returns (bool) {
+        for (uint256 i = 1; i <= retCtr; i++) {
+            if (RET[i].addr == _address) return true;
+        }
+        return false;
+    }
+
+    // To supply raw materials from RMS supplier to the manufacturer
     function RMSsupply(uint256 _medicineID) public {
         require(_medicineID > 0 && _medicineID <= medicineCtr);
         uint256 _id = findRMS(msg.sender);
@@ -172,7 +172,6 @@ contract SupplyChain {
         MedicineStock[_medicineID].stage = STAGE.RawMaterialSupply;
     }
 
-    //To check if RMS is available in the blockchain
     function findRMS(address _address) private view returns (uint256) {
         require(rmsCtr > 0);
         for (uint256 i = 1; i <= rmsCtr; i++) {
@@ -181,7 +180,7 @@ contract SupplyChain {
         return 0;
     }
 
-    //To manufacture medicine
+    // To manufacture medicine
     function Manufacturing(uint256 _medicineID) public {
         require(_medicineID > 0 && _medicineID <= medicineCtr);
         uint256 _id = findMAN(msg.sender);
@@ -191,7 +190,6 @@ contract SupplyChain {
         MedicineStock[_medicineID].stage = STAGE.Manufacture;
     }
 
-    //To check if Manufacturer is available in the blockchain
     function findMAN(address _address) private view returns (uint256) {
         require(manCtr > 0);
         for (uint256 i = 1; i <= manCtr; i++) {
@@ -200,7 +198,7 @@ contract SupplyChain {
         return 0;
     }
 
-    //To supply medicines from Manufacturer to distributor
+    // To supply medicines from Manufacturer to distributor
     function Distribute(uint256 _medicineID) public {
         require(_medicineID > 0 && _medicineID <= medicineCtr);
         uint256 _id = findDIS(msg.sender);
@@ -210,7 +208,6 @@ contract SupplyChain {
         MedicineStock[_medicineID].stage = STAGE.Distribution;
     }
 
-    //To check if distributor is available in the blockchain
     function findDIS(address _address) private view returns (uint256) {
         require(disCtr > 0);
         for (uint256 i = 1; i <= disCtr; i++) {
@@ -219,7 +216,7 @@ contract SupplyChain {
         return 0;
     }
 
-    //To supply medicines from distributor to retailer
+    // To supply medicines from distributor to retailer
     function Retail(uint256 _medicineID) public {
         require(_medicineID > 0 && _medicineID <= medicineCtr);
         uint256 _id = findRET(msg.sender);
@@ -229,7 +226,6 @@ contract SupplyChain {
         MedicineStock[_medicineID].stage = STAGE.Retail;
     }
 
-    //To check if retailer is available in the blockchain
     function findRET(address _address) private view returns (uint256) {
         require(retCtr > 0);
         for (uint256 i = 1; i <= retCtr; i++) {
@@ -238,32 +234,39 @@ contract SupplyChain {
         return 0;
     }
 
-    //To sell medicines from retailer to consumer
+    // To sell medicines from retailer to consumer
     function sold(uint256 _medicineID) public {
         require(_medicineID > 0 && _medicineID <= medicineCtr);
         uint256 _id = findRET(msg.sender);
         require(_id > 0);
-        require(_id == MedicineStock[_medicineID].RETid); //Only correct retailer can mark medicine as sold
+        require(_id == MedicineStock[_medicineID].RETid);
         require(MedicineStock[_medicineID].stage == STAGE.Retail);
         MedicineStock[_medicineID].stage = STAGE.sold;
     }
+function addMedicine(
+    string memory _name,
+    string memory _description,
+    uint256 _price
+) public {
+    // Affichage des paramètres reçus pour la vérification
+    emit LogAddMedicine(_name, _description, _price);
 
-    // To add new medicines to the stock
-    function addMedicine(
-        string memory _name,
-        string memory _description
-    ) public onlyByOwner {
-        require((rmsCtr > 0) && (manCtr > 0) && (disCtr > 0) && (retCtr > 0));
-        medicineCtr++;
-        MedicineStock[medicineCtr] = medicine(
-            medicineCtr,
-            _name,
-            _description,
-            0,
-            0,
-            0,
-            0,
-            STAGE.Init
-        );
-    }
+    medicineCtr++;
+    MedicineStock[medicineCtr] = medicine(
+        medicineCtr,
+        _name,
+        _description,
+        _price, // Ajout du prix
+        0,
+        0,
+        0,
+        0,
+        STAGE.Init
+    );
 }
+
+event LogAddMedicine(string name, string description, uint256 price);
+
+
+    
+    }
