@@ -267,6 +267,13 @@ function addMedicine(
 
 event LogAddMedicine(string name, string description, uint256 price);
 
+function getRole(address _address) public view returns (string memory) {
+    if (isRMSRegistered(_address)) return "RawMaterialSupplier";
+    if (isMANRegistered(_address)) return "Manufacturer";
+    if (isDISRegistered(_address)) return "Distributor";
+    if (isRETRegistered(_address)) return "Retailer";
+    return "None"; // Aucun rôle trouvé
+}
 
     
     }
