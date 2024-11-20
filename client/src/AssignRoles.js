@@ -252,6 +252,26 @@ function AssignRoles() {
                     <p className="link">
                         Vous avez déjà un compte ? <a href="/">Connectez-vous</a>
                     </p>
+                    {/* <table className="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Place</th>
+                            <th>Ethereum Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Object.keys(data).map((key) => (
+                            <tr key={key}>
+                                <td>{data[key].id}</td>
+                                <td>{data[key].name}</td>
+                                <td>{data[key].place}</td>
+                                <td>{data[key].addr}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table> */}
                 </div>
             </div></>
     );

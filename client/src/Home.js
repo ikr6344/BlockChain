@@ -9,6 +9,7 @@ function Home() {
   };
 
   return (
+    
     <div style={styles.container}>
       <div style={styles.content}>
         <h3>Supply Chain Manager</h3>

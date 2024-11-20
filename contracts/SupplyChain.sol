@@ -1,19 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
-
+pragma experimental ABIEncoderV2;
 contract SupplyChain {
-    //Smart Contract owner will be the person who deploys the contract only he can authorize various roles like retailer, Manufacturer,etc
+    // Smart Contract owner will be the person who deploys the contract, only he can authorize various roles like retailer, Manufacturer, etc.
     address public Owner;
 
     constructor() public {
         Owner = msg.sender;
     }
-
-    //Roles (flow of pharma supply chain)
-    // RawMaterialSupplier; //This is where Manufacturer will get raw materials to make medicines
-    // Manufacturer;  //Various WHO guidelines should be followed by this person
-    // Distributor; //This guy distributes the medicines to retailers
-    // Retailer; //Normal customer buys from the retailer
 
     modifier onlyByOwner() {
         require(msg.sender == Owner);
@@ -21,8 +15,6 @@ contract SupplyChain {
     }
 
     enum STAGE {
-        Init,
-        RawMaterialSupply,
         Manufacture,
         Distribution,
         Retail,
@@ -30,43 +22,38 @@ contract SupplyChain {
     }
 
     uint256 public medicineCtr = 0;
+    uint256 public productCtr = 0;
     uint256 public rmsCtr = 0;
     uint256 public manCtr = 0;
     uint256 public disCtr = 0;
     uint256 public retCtr = 0;
 
     struct medicine {
-    uint256 id;
-    string name;
-    string description;
-    uint256 price; 
-    uint256 RMSid;
-    uint256 MANid;
-    uint256 DISid;
-    uint256 RETid;
-    STAGE stage;
-}
+        uint256 id;
+        string name;
+        string description;
+        uint256 price; 
+        uint256 RMSid;
+    }
 
+    struct Product {
+        uint256 id;
+        string name;
+        string description;
+        uint256 price;
+        uint256[] medicineIds; // Liste des médicaments associés
+        uint256 MANid;
+        uint256 DISid;
+        uint256 RETid;
+        STAGE stage;
+    }
 
+    mapping(uint256 => Product) public ProductStock;
     mapping(uint256 => medicine) public MedicineStock;
 
-    function showStage(
-        uint256 _medicineID
-    ) public view returns (string memory) {
-        require(medicineCtr > 0);
-        if (MedicineStock[_medicineID].stage == STAGE.Init)
-            return "Goods Ordered";
-        else if (MedicineStock[_medicineID].stage == STAGE.RawMaterialSupply)
-            return "Raw Material Supply Stage";
-        else if (MedicineStock[_medicineID].stage == STAGE.Manufacture)
-            return "Manufacturing Stage";
-        else if (MedicineStock[_medicineID].stage == STAGE.Distribution)
-            return "Distribution Stage";
-        else if (MedicineStock[_medicineID].stage == STAGE.Retail)
-            return "Retail Stage";
-        else if (MedicineStock[_medicineID].stage == STAGE.sold)
-            return "Goods Sold";
-    }
+    mapping(address => uint256[]) public MedicinesByAddress; // Mapping des adresses aux identifiants des médicaments qu'elles ont ajoutés
+
+    event LogAddMedicine(string name, string description, uint256 price);
 
     struct rawMaterialSupplier {
         address addr;
@@ -133,7 +120,6 @@ contract SupplyChain {
     }
 
     // Private helper functions to check if an address is already registered for a role
-
     function isRMSRegistered(address _address) private view returns (bool) {
         for (uint256 i = 1; i <= rmsCtr; i++) {
             if (RMS[i].addr == _address) return true;
@@ -162,17 +148,7 @@ contract SupplyChain {
         return false;
     }
 
-    // To supply raw materials from RMS supplier to the manufacturer
-    function RMSsupply(uint256 _medicineID) public {
-        require(_medicineID > 0 && _medicineID <= medicineCtr);
-        uint256 _id = findRMS(msg.sender);
-        require(_id > 0);
-        require(MedicineStock[_medicineID].stage == STAGE.Init);
-        MedicineStock[_medicineID].RMSid = _id;
-        MedicineStock[_medicineID].stage = STAGE.RawMaterialSupply;
-    }
-
-    function findRMS(address _address) private view returns (uint256) {
+    function findRMS(address _address) public view returns (uint256) {
         require(rmsCtr > 0);
         for (uint256 i = 1; i <= rmsCtr; i++) {
             if (RMS[i].addr == _address) return RMS[i].id;
@@ -180,32 +156,12 @@ contract SupplyChain {
         return 0;
     }
 
-    // To manufacture medicine
-    function Manufacturing(uint256 _medicineID) public {
-        require(_medicineID > 0 && _medicineID <= medicineCtr);
-        uint256 _id = findMAN(msg.sender);
-        require(_id > 0);
-        require(MedicineStock[_medicineID].stage == STAGE.RawMaterialSupply);
-        MedicineStock[_medicineID].MANid = _id;
-        MedicineStock[_medicineID].stage = STAGE.Manufacture;
-    }
-
-    function findMAN(address _address) private view returns (uint256) {
+    function findMAN(address _address) public view returns (uint256) {
         require(manCtr > 0);
         for (uint256 i = 1; i <= manCtr; i++) {
             if (MAN[i].addr == _address) return MAN[i].id;
         }
         return 0;
-    }
-
-    // To supply medicines from Manufacturer to distributor
-    function Distribute(uint256 _medicineID) public {
-        require(_medicineID > 0 && _medicineID <= medicineCtr);
-        uint256 _id = findDIS(msg.sender);
-        require(_id > 0);
-        require(MedicineStock[_medicineID].stage == STAGE.Manufacture);
-        MedicineStock[_medicineID].DISid = _id;
-        MedicineStock[_medicineID].stage = STAGE.Distribution;
     }
 
     function findDIS(address _address) private view returns (uint256) {
@@ -216,16 +172,6 @@ contract SupplyChain {
         return 0;
     }
 
-    // To supply medicines from distributor to retailer
-    function Retail(uint256 _medicineID) public {
-        require(_medicineID > 0 && _medicineID <= medicineCtr);
-        uint256 _id = findRET(msg.sender);
-        require(_id > 0);
-        require(MedicineStock[_medicineID].stage == STAGE.Distribution);
-        MedicineStock[_medicineID].RETid = _id;
-        MedicineStock[_medicineID].stage = STAGE.Retail;
-    }
-
     function findRET(address _address) private view returns (uint256) {
         require(retCtr > 0);
         for (uint256 i = 1; i <= retCtr; i++) {
@@ -234,46 +180,109 @@ contract SupplyChain {
         return 0;
     }
 
-    // To sell medicines from retailer to consumer
-    function sold(uint256 _medicineID) public {
-        require(_medicineID > 0 && _medicineID <= medicineCtr);
+    // To supply products from Manufacturer to distributor
+    function Distribute(uint256 _produitId) public {
+        require(_produitId > 0 && _produitId <= productCtr);
+        uint256 _id = findDIS(msg.sender);
+        require(_id > 0);
+        require(ProductStock[_produitId].stage == STAGE.Manufacture);
+        ProductStock[_produitId].DISid = _id;
+        ProductStock[_produitId].stage = STAGE.Distribution;
+    }
+
+    // To supply products from distributor to retailer
+    function Retail(uint256 _produitId) public {
+        require(_produitId > 0 && _produitId <= productCtr);
         uint256 _id = findRET(msg.sender);
         require(_id > 0);
-        require(_id == MedicineStock[_medicineID].RETid);
-        require(MedicineStock[_medicineID].stage == STAGE.Retail);
-        MedicineStock[_medicineID].stage = STAGE.sold;
+        require(ProductStock[_produitId].stage == STAGE.Distribution);
+        ProductStock[_produitId].RETid = _id;
+        ProductStock[_produitId].stage = STAGE.Retail;
     }
-function addMedicine(
-    string memory _name,
-    string memory _description,
-    uint256 _price
-) public {
-    // Affichage des paramètres reçus pour la vérification
+
+    // To sell products from retailer to consumer
+    function sold(uint256 _produitId) public {
+        require(_produitId > 0 && _produitId <= productCtr);
+        uint256 _id = findRET(msg.sender);
+        require(_id > 0);
+        require(_id == ProductStock[_produitId].RETid);
+        require(ProductStock[_produitId].stage == STAGE.Retail);
+        ProductStock[_produitId].stage = STAGE.sold;
+    }
+
+    // Function to add medicine
+   function addMedicine(string memory _name, string memory _description, uint256 _price, uint256 _rmsId) public {
+    medicineCtr++;  // Incrémenter le compteur de médicaments
+    MedicineStock[medicineCtr] = medicine(medicineCtr, _name, _description, _price, _rmsId);
+
+    // Ajout du médicament à la liste des médicaments associés à l'adresse de l'utilisateur
+    MedicinesByAddress[msg.sender].push(medicineCtr); // Utiliser msg.sender pour l'adresse de l'appelant
+
     emit LogAddMedicine(_name, _description, _price);
-
-    medicineCtr++;
-    MedicineStock[medicineCtr] = medicine(
-        medicineCtr,
-        _name,
-        _description,
-        _price, // Ajout du prix
-        0,
-        0,
-        0,
-        0,
-        STAGE.Init
-    );
 }
 
-event LogAddMedicine(string name, string description, uint256 price);
 
-function getRole(address _address) public view returns (string memory) {
-    if (isRMSRegistered(_address)) return "RawMaterialSupplier";
-    if (isMANRegistered(_address)) return "Manufacturer";
-    if (isDISRegistered(_address)) return "Distributor";
-    if (isRETRegistered(_address)) return "Retailer";
-    return "None"; // Aucun rôle trouvé
+   // Exemple de fonction de récupération des médicaments associés à une adresse
+function getMedicinesByAddress(address _address) public view returns (uint256[] memory) {
+    return MedicinesByAddress[_address];
 }
 
-    
+    // Function to get the role of a specific address
+    function getRole(address _address) public view returns (string memory) {
+        if (isRMSRegistered(_address)) return "RawMaterialSupplier";
+        if (isMANRegistered(_address)) return "Manufacturer";
+        if (isDISRegistered(_address)) return "Distributor";
+        if (isRETRegistered(_address)) return "Retailer";
+        return "None"; // No role found
     }
+
+    // Function to add a product containing multiple medicines
+    function addProduct(
+        string memory _name,
+        string memory _description,
+        uint256 _price,
+        uint256[] memory _medicineIds,
+        uint256 _MANid
+    ) public {
+        // Validate: Check that all medicines exist and are at the correct stage
+        for (uint256 i = 0; i < _medicineIds.length; i++) {
+            require(_medicineIds[i] > 0 && _medicineIds[i] <= medicineCtr, "Invalid medicine ID");
+        }
+        require(_MANid > 0 && _MANid <= manCtr, "Invalid MAN ID");
+        require(MAN[_MANid].addr == msg.sender, "Only the manufacturer can add this product");
+
+        productCtr++;
+        ProductStock[productCtr] = Product(
+            productCtr,
+            _name,
+            _description,
+            _price,
+            _medicineIds,
+            _MANid,
+            0,
+            0,
+            STAGE.Manufacture
+        );
+    }
+
+function getAllMedicines() public view returns (uint256[] memory) {
+    uint256[] memory allMedicines = new uint256[](medicineCtr);
+    for (uint256 i = 1; i <= medicineCtr; i++) {
+        allMedicines[i-1] = i;
+    }
+    return allMedicines;
+}
+function getMedicineDetails(uint256[] memory medicineIds) public view returns (medicine[] memory) {
+    medicine[] memory medicinesDetails = new medicine[](medicineIds.length);
+    
+    for (uint256 i = 0; i < medicineIds.length; i++) {
+        uint256 id = medicineIds[i];
+        require(id > 0 && id <= medicineCtr, "Invalid medicine ID");
+        medicinesDetails[i] = MedicineStock[id];
+    }
+
+    return medicinesDetails;
+}
+
+
+}

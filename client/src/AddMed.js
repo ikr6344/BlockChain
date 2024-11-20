@@ -5,21 +5,19 @@ import SupplyChainABI from "./artifacts/SupplyChain.json";
 
 function AddMed() {
     const history = useHistory();
+    const [currentaccount, setCurrentaccount] = useState("");
+    const [loader, setLoader] = useState(true);
+    const [SupplyChain, setSupplyChain] = useState();
+    const [Medicines, setMedicines] = useState([]); // État pour stocker les médicaments récupérés
+    const [MedName, setMedName] = useState("");
+    const [MedDes, setMedDes] = useState("");
+    const [MedPrice, setMedPrice] = useState(""); 
+    const [rmsId, setRmsId] = useState(null);
+
     useEffect(() => {
         loadWeb3();
         loadBlockchaindata();
     }, []);
-
-    const [currentaccount, setCurrentaccount] = useState("");
-    const [loader, setloader] = useState(true);
-    const [SupplyChain, setSupplyChain] = useState();
-    const [MED, setMED] = useState({});
-    const [MedName, setMedName] = useState("");
-    const [MedDes, setMedDes] = useState("");
-    const [MedPrice, setMedPrice] = useState(""); // Nouveau champ pour le prix
-
-    // const [MedPrice, setMedPrice] = useState("");  // Ajout du champ pour le prix
-    const [MedStage, setMedStage] = useState([]);
 
     const loadWeb3 = async () => {
         if (window.ethereum) {
@@ -33,27 +31,61 @@ function AddMed() {
     };
 
     const loadBlockchaindata = async () => {
-        setloader(true);
+        setLoader(true);
         const web3 = window.web3;
         const accounts = await web3.eth.getAccounts();
         setCurrentaccount(accounts[0]);
         const networkId = await web3.eth.net.getId();
         const networkData = SupplyChainABI.networks[networkId];
+    
         if (networkData) {
             const supplychain = new web3.eth.Contract(SupplyChainABI.abi, networkData.address);
             setSupplyChain(supplychain);
-            const medCtr = await supplychain.methods.medicineCtr().call();
-            const med = {};
-            const medStage = [];
-            for (let i = 0; i < medCtr; i++) {
-                med[i] = await supplychain.methods.MedicineStock(i + 1).call();
-                medStage[i] = await supplychain.methods.showStage(i + 1).call();
+    
+            try {
+                // Récupérer l'ID RMS associé à l'utilisateur connecté
+                const rmsId = await supplychain.methods.findRMS(accounts[0]).call();
+                if (rmsId.toString() === "0") {
+                    alert("No RMS associated with this account!");
+                } else {
+                    console.log("RMS ID:", rmsId);
+                    setRmsId(rmsId.toString());
+                }
+
+                // Appeler la fonction getMedicinesByAddress pour récupérer les médicaments de l'utilisateur
+                const medicines = await supplychain.methods.getMedicinesByAddress(accounts[0]).call();
+                console.log("Medicines for this address:", medicines);
+                setMedicines(medicines);
+                
+            } catch (err) {
+                console.error("Error fetching data from contract:", err);
             }
-            setMED(med);
-            setMedStage(medStage);
-            setloader(false);
+            setLoader(false);
         } else {
-            window.alert('The smart contract is not deployed to the current network');
+            alert('The smart contract is not deployed to the current network');
+        }
+    };
+
+    const redirect_to_home = () => {
+        history.push('/');
+    };
+
+    const handlerChangeNameMED = (event) => setMedName(event.target.value);
+    const handlerChangeDesMED = (event) => setMedDes(event.target.value);
+    const handlerChangePriceMED = (event) => setMedPrice(event.target.value);
+
+    const handlerSubmitMED = async (event) => {
+        event.preventDefault();
+        try {
+            const receipt = await SupplyChain.methods
+                .addMedicine(MedName, MedDes, MedPrice, rmsId)
+                .send({ from: currentaccount });
+            if (receipt) {
+                loadBlockchaindata();
+            }
+        } catch (err) {
+            alert("An error occurred while adding the medicine.");
+            console.error(err);
         }
     };
 
@@ -64,33 +96,6 @@ function AddMed() {
             </div>
         );
     }
-
-    const redirect_to_home = () => {
-        history.push('/');
-    };
-
-    const handlerChangeNameMED = (event) => setMedName(event.target.value);
-    const handlerChangeDesMED = (event) => setMedDes(event.target.value);
-    // const handlerChangePriceMED = (event) => setMedPrice(event.target.value);  // Ajout du gestionnaire de changement de prix
-    const handlerChangePriceMED = (event) => setMedPrice(event.target.value);
-
-    const handlerSubmitMED = async (event) => {
-        event.preventDefault();
-        try {
-            const reciept = await SupplyChain.methods
-                .addMedicine(MedName, MedDes, MedPrice)
-                .send({ from: currentaccount });
-            if (reciept) {
-                loadBlockchaindata();
-            }
-        } catch (err) {
-            alert("An error occurred!!!");
-        }
-    };
-    
-    
-    
-    
 
     return (
         <div style={styles.container}>
@@ -107,7 +112,7 @@ function AddMed() {
                         onChange={handlerChangeNameMED}
                         placeholder="Goods Name"
                         required
-                        style={{ ...styles.input, marginBottom: '10px' }} // Espace en bas
+                        style={{ ...styles.input, marginBottom: '10px' }} 
                     />
                     <input
                         className="form-control-sm"
@@ -115,49 +120,45 @@ function AddMed() {
                         onChange={handlerChangeDesMED}
                         placeholder="Goods Description"
                         required
-                        style={{ ...styles.input, marginBottom: '10px' }} // Espace en bas
+                        style={{ ...styles.input, marginBottom: '10px' }} 
                     />
                     <input
-    className="form-control-sm"
-    type="number"
-    onChange={handlerChangePriceMED}
-    placeholder="Goods Price"
-    required
-    style={{ ...styles.input, marginBottom: '10px' }}
-/>
-
-                 
-                    <button
-                        className="btn btn-outline-success btn-sm"
-                        style={{ ...styles.submitButton, marginTop: '10px' }} // Espace en haut du bouton
-                    >
+                        className="form-control-sm"
+                        type="number"
+                        onChange={handlerChangePriceMED}
+                        placeholder="Goods Price"
+                        required
+                        style={{ ...styles.input, marginBottom: '10px' }}
+                    />
+                    <button className="btn btn-outline-success btn-sm" style={{ ...styles.submitButton, marginTop: '10px' }}>
                         Order
                     </button>
                 </form>
 
                 <h5>Ordered Goods:</h5>
                 <table className="table table-bordered" style={styles.table}>
-                <thead>
-    <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Description</th>
-        <th scope="col">Price</th> {/* Nouvelle colonne */}
-        <th scope="col">Current Stage</th>
-    </tr>
-</thead>
-<tbody>
-    {Object.keys(MED).map((key) => (
-        <tr key={key}>
-            <td>{MED[key].id}</td>
-            <td>{MED[key].name}</td>
-            <td>{MED[key].description}</td>
-            <td>{MED[key].price}</td> {/* Affichez le prix */}
-            <td>{MedStage[key]}</td>
-        </tr>
-    ))}
-</tbody>
-
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Medicines.length > 0 ? (
+                            Medicines.map((medicine, index) => (
+                                <tr key={index}>
+                                    <td>{medicine.id}</td>
+                                    <td>{medicine.name}</td>
+                                    <td>{medicine.description}</td>
+                                    <td>{medicine.price}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr><td colSpan="4">No medicines found for this address.</td></tr>
+                        )}
+                    </tbody>
                 </table>
             </div>
         </div>
