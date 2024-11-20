@@ -1,156 +1,283 @@
 import React, { useState, useEffect } from 'react';
+import Web3 from "web3";
+import { useHistory } from "react-router-dom";
+import SupplyChainABI from "./artifacts/SupplyChain.json"; // Assurez-vous que votre ABI est importée
+import './AddProductComponent.css'; // Importation du fichier CSS
 
-function ProductComponent() {
-    const [products, setProducts] = useState([]);  // Liste des produits
-    const [productName, setProductName] = useState("");  // Nom du produit
-    const [productDescription, setProductDescription] = useState("");  // Description du produit
-    const [productPrice, setProductPrice] = useState("");  // Prix du produit
-    const [loading, setLoading] = useState(false);  // Indicateur de chargement
-
-    // Simuler un appel API pour récupérer les produits
-    useEffect(() => {
-        loadProducts();
-    }, []);
+function AddProductComponent() {
+    const history = useHistory();
+    const [currentAccount, setCurrentAccount] = useState("");
+    const [loader, setLoader] = useState(true);
+    const [SupplyChain, setSupplyChain] = useState();
+    const [Medicines, setMedicines] = useState([]); // Pour stocker les médicaments récupérés
+    const [productName, setProductName] = useState("");
+    const [productDescription, setProductDescription] = useState("");
+    const [productPrice, setProductPrice] = useState("");
+    const [selectedMedicines, setSelectedMedicines] = useState([]); // Pour stocker les IDs des médicaments sélectionnés
+    const [rmsId, setRmsId] = useState(""); // Stocker l'ID du RMS
+    const [products, setProducts] = useState([]);
 
     const loadProducts = async () => {
-        setLoading(true);
-        // Simuler un appel API pour récupérer la liste des produits
-        const fetchedProducts = [
-            { id: 1, name: 'Product 1', description: 'Description 1', price: '50' },
-            { id: 2, name: 'Product 2', description: 'Description 2', price: '100' },
-        ];
-        setProducts(fetchedProducts);
-        setLoading(false);
+        const allProducts = await SupplyChain.methods.getAllProducts().call();
+        setProducts(allProducts);
+    };
+
+    useEffect(() => {
+        loadWeb3();
+        loadBlockchainData();
+    }, []);
+
+    const loadWeb3 = async () => {
+        if (window.ethereum) {
+            window.web3 = new Web3(window.ethereum);
+            await window.ethereum.enable();
+        } else if (window.web3) {
+            window.web3 = new Web3(window.web3.currentProvider);
+        } else {
+            window.alert("Non-Ethereum browser detected. You should consider trying MetaMask!");
+        }
+    };
+
+    const loadBlockchainData = async () => {
+        setLoader(true);
+        const web3 = window.web3;
+        const accounts = await web3.eth.getAccounts();
+        setCurrentAccount(accounts[0]);
+        const networkId = await web3.eth.net.getId();
+        const networkData = SupplyChainABI.networks[networkId];
+        
+        if (networkData) {
+            const supplyChain = new web3.eth.Contract(SupplyChainABI.abi, networkData.address);
+            setSupplyChain(supplyChain);
+
+            try {
+                // Récupérer tous les médicaments
+                const medicines = await supplyChain.methods.getAllMedicines().call();
+                const medicinesFormatted = medicines.map(medicine => {
+                    return {
+                        id: medicine.toString(),
+                        name: `Medicine #${medicine.toString()}`,
+                    };
+                });
+                setMedicines(medicinesFormatted);
+
+                // Récupérer le nombre de produits
+                const productCount = await supplyChain.methods.productCtr().call();
+                if (productCount > 0) {
+                    const allProducts = await supplyChain.methods.getAllProducts().call();
+                    setProducts(allProducts);
+                }
+
+                // Récupérer l'ID MAN associé à l'adresse actuelle
+                const rmsIdFromBlockchain = await supplyChain.methods.findMAN(accounts[0]).call();
+                if (rmsIdFromBlockchain.toString() === "0") {
+                    alert("No MAN associated with this account!");
+                } else {
+                    setRmsId(rmsIdFromBlockchain.toString());
+                }
+
+            } catch (err) {
+                console.error("Error fetching data from contract:", err);
+            }
+            setLoader(false);
+        } else {
+            alert('The smart contract is not deployed to the current network');
+        }
     };
 
     const handleAddProduct = async (event) => {
         event.preventDefault();
-        if (!productName || !productDescription || !productPrice || isNaN(productPrice) || productPrice <= 0) {
-            alert('Please enter valid product details.');
+
+        // Vérification si des médicaments ont été sélectionnés
+        if (selectedMedicines.length === 0) {
+            alert("Please select at least one medicine.");
             return;
         }
 
-        // Ajouter un produit (simuler l'appel API)
-        const newProduct = {
-            id: products.length + 1,  // Générer un ID unique (ici simple incrément)
-            name: productName,
-            description: productDescription,
-            price: productPrice,
-        };
+        // Vérification si tous les champs sont remplis
+        if (!productName || !productDescription || !productPrice) {
+            alert("Please fill all product fields.");
+            return;
+        }
 
-        setProducts([...products, newProduct]);
-        setProductName('');
-        setProductDescription('');
-        setProductPrice('');
+        // Vérification que l'ID du RMS est récupéré
+        if (!rmsId || rmsId === "0") {
+            alert("RMS ID is invalid or not found.");
+            return;
+        }
+
+        try {
+            const receipt = await SupplyChain.methods
+                .addProduct(productName, productDescription, productPrice, selectedMedicines, rmsId)
+                .send({ from: currentAccount });
+
+            if (receipt) {
+                history.push('/produit');
+            }
+        } catch (err) {
+            console.error("Error adding product:", err);
+            alert("An error occurred while adding the product. Check the console for more details.");
+        }
     };
+
+    const handleSelectMedicines = (event) => {
+        const selectedOptions = Array.from(event.target.selectedOptions, option => option.value);
+        setSelectedMedicines(selectedOptions);
+    };
+
+    if (loader) {
+        return <div className="loader"><h1>Loading...</h1></div>;
+    }
 
     return (
         <div style={styles.container}>
-            <h1>Product Management</h1>
+            <div style={styles.content}>
+                <div style={styles.header}>
+                    <span><b>Current Account Address:</b> {currentAccount}</span>
+                    <span onClick={() => history.push('/')} className="btn btn-outline-danger btn-sm" style={styles.homeButton}>HOME</span>
+                </div>
 
-            <div style={styles.formContainer}>
-                <h3>Add New Product</h3>
+                <h5>Add Product:</h5>
                 <form onSubmit={handleAddProduct} style={styles.form}>
                     <input
+                        className="form-control-sm"
                         type="text"
-                        placeholder="Product Name"
                         value={productName}
                         onChange={(e) => setProductName(e.target.value)}
-                        style={styles.input}
+                        placeholder="Product Name"
                         required
-                    />
-                    <textarea
-                        placeholder="Product Description"
-                        value={productDescription}
-                        onChange={(e) => setProductDescription(e.target.value)}
                         style={styles.input}
-                        required
                     />
                     <input
+                        className="form-control-sm"
+                        type="text"
+                        value={productDescription}
+                        onChange={(e) => setProductDescription(e.target.value)}
+                        placeholder="Product Description"
+                        required
+                        style={styles.input}
+                    />
+                    <input
+                        className="form-control-sm"
                         type="number"
-                        placeholder="Product Price"
                         value={productPrice}
                         onChange={(e) => setProductPrice(e.target.value)}
-                        style={styles.input}
+                        placeholder="Product Price"
                         required
+                        style={styles.input}
                     />
-                    <button type="submit" style={styles.button}>Add Product</button>
+                    <select
+                        multiple={true}
+                        onChange={handleSelectMedicines}
+                        required
+                        style={styles.select}
+                    >
+                        <option value="">Select Medicines</option>
+                        {Medicines.map((medicine) => (
+                            <option key={medicine.id} value={medicine.id}>
+                                {medicine.name} - ID: {medicine.id}
+                            </option>
+                        ))}
+                    </select>
+                    <button className="btn btn-outline-success btn-sm" style={styles.submitButton}>
+                        Add Product
+                    </button>
                 </form>
-            </div>
 
-            {loading ? (
-                <p>Loading products...</p>
-            ) : (
-                <div>
-                    <h3>Product List</h3>
-                    <table style={styles.table}>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {products.map((product) => (
-                                <tr key={product.id}>
+                <h5>All Products:</h5>
+                <table className="table table-bordered" style={styles.table}>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Stage</th>
+                            <th>Manufacturer ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {products.length > 0 ? (
+                            products.map((product, index) => (
+                                <tr key={index}>
+                                    <td>{product.id}</td>
                                     <td>{product.name}</td>
                                     <td>{product.description}</td>
                                     <td>{product.price}</td>
+                                    <td>{product.stage}</td>
+                                    <td>{product.MANid}</td>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
+                            ))
+                        ) : (
+                            <tr><td colSpan="6">No products found.</td></tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }
 
-// Styles pour le composant
 const styles = {
     container: {
-        padding: '20px',
-        maxWidth: '800px',
-        margin: '0 auto',
-        backgroundColor: '#f9f9f9',
-        borderRadius: '8px',
-        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        background: 'linear-gradient(135deg, #f0f4c3 30%, #c5e1a5 90%)',
+        padding: '20px'
     },
-    formContainer: {
-        marginBottom: '30px',
+    content: {
+        backgroundColor: '#ffffffcc',
+        padding: '30px',
+        borderRadius: '10px',
+        boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.2)',
+        maxWidth: '700px',
+        width: '100%',
+        textAlign: 'center'
+    },
+    header: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '20px'
+    },
+    homeButton: {
+        cursor: 'pointer'
     },
     form: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
+        gap: '10px',
+        marginBottom: '20px'
     },
     input: {
-        width: '100%',
+        borderRadius: '5px',
         padding: '10px',
-        marginBottom: '10px',
-        borderRadius: '4px',
-        border: '1px solid #ddd',
-        fontSize: '16px',
+        marginBottom: '10px'
     },
-    button: {
+    select: {
+        borderRadius: '5px',
+        padding: '10px',
+        marginBottom: '10px'
+    },
+    submitButton: {
+        backgroundColor: '#4caf50',
+        color: 'white',
         padding: '10px 20px',
-        backgroundColor: '#28a745',
-        color: '#fff',
+        borderRadius: '5px',
         border: 'none',
-        borderRadius: '4px',
-        fontSize: '16px',
         cursor: 'pointer',
     },
     table: {
+        marginTop: '30px',
         width: '100%',
-        borderCollapse: 'collapse',
-        marginTop: '20px',
+        textAlign: 'center',
     },
-    tableCell: {
-        padding: '8px 12px',
-        border: '1px solid #ddd',
-    },
+    loader: {
+        textAlign: 'center',
+        fontSize: '24px',
+    }
 };
 
-export default ProductComponent;
+export default AddProductComponent;

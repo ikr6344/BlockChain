@@ -65,8 +65,8 @@ const Login = () => {
       }
 
       // Redirection basée sur le rôle
-      if (role === "RawMaterialSupplier") history.push('/home');
-      if (role === "Manufacturer") history.push('/addmed');
+      if (role === "RawMaterialSupplier") history.push('/addmed');
+      if (role === "Manufacturer") history.push('/produit');
       if (role === "Distributor") history.push('/track');
       if (role === "Retailer") history.push('/roles');
     } catch (err) {

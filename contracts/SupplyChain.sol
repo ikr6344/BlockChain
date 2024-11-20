@@ -284,5 +284,18 @@ function getMedicineDetails(uint256[] memory medicineIds) public view returns (m
     return medicinesDetails;
 }
 
+function getAllProducts() public view returns (Product[] memory) {
+    require(productCtr > 0, "No products available"); // Vérifie qu'il y a des produits enregistrés
+
+    Product[] memory allProducts = new Product[](productCtr);
+    
+    // Itérer à partir de 1 jusqu'à productCtr
+    for (uint256 i = 1; i <= productCtr; i++) {
+        allProducts[i - 1] = ProductStock[i];  // Récupérer chaque produit
+    }
+    
+    return allProducts;
+}
+
 
 }
